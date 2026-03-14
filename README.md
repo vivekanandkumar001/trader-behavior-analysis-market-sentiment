@@ -1,24 +1,20 @@
-# Trader Behavior Analysis Using Market Sentiment
+# Trader Behavior Analysis Using Market Sentiment (AI & ML)
 
 ## Overview
 
-This project analyzes trader behavior using historical trading data from the Hyperliquid platform and the Bitcoin Fear & Greed Index.
-The goal is to explore how market sentiment influences trader performance and identify patterns that can help improve trading strategies.
+This project analyzes trader behavior using historical trading data from the Hyperliquid platform combined with the Bitcoin Fear & Greed Index.
+The goal is to understand how **market sentiment influences trading performance** and to build a **machine learning model that predicts trade profitability**.
 
-The analysis combines two datasets:
-
-1. **Hyperliquid Historical Trader Data**
-2. **Bitcoin Fear & Greed Index (Market Sentiment Dataset)**
-
-By merging these datasets based on date, we can evaluate how trader performance changes under different market sentiment conditions.
+The analysis integrates **data science, exploratory data analysis (EDA), and machine learning techniques** to uncover hidden patterns in trading behavior.
 
 ---
 
 ## Objectives
 
-* Analyze trader performance across different market sentiment regimes.
-* Identify patterns in profitability, trade size, and trading activity.
-* Discover behavioral trends that can inform smarter trading strategies.
+* Analyze how market sentiment impacts trader performance.
+* Identify behavioral patterns in profitable and losing trades.
+* Understand how trade size, execution price, and sentiment influence outcomes.
+* Build a **machine learning model to predict whether a trade will be profitable**.
 
 ---
 
@@ -26,22 +22,25 @@ By merging these datasets based on date, we can evaluate how trader performance 
 
 ### 1. Hyperliquid Historical Trader Data
 
-Contains detailed trading activity including:
+This dataset contains detailed trading activity including:
 
 * Account
 * Coin
 * Execution Price
-* Trade Size (Tokens & USD)
-* Trade Direction (Buy/Sell)
+* Trade Size (Tokens)
+* Trade Size (USD)
+* Buy/Sell Side
 * Timestamp
+* Start Position
 * Closed Profit & Loss (PnL)
-* Trading Fees
+* Trading Fee
 
 ### 2. Bitcoin Fear & Greed Index
 
-Market sentiment dataset including:
+This dataset represents market sentiment and contains:
 
 * Date
+* Sentiment Value
 * Sentiment Classification
 
   * Extreme Fear
@@ -56,67 +55,136 @@ Market sentiment dataset including:
 
 ### 1. Data Collection
 
-Datasets were downloaded from Google Drive and loaded into Python using Pandas.
+Both datasets were downloaded from Google Drive and loaded using **Python and Pandas**.
 
 ### 2. Data Cleaning
 
-* Converted timestamps to datetime format
-* Extracted trading date and time
-* Handled missing sentiment values
-* Standardized column formats
+Data preprocessing steps included:
+
+* Converting timestamps to datetime format
+* Extracting date and time features
+* Handling missing sentiment values
+* Standardizing column formats
 
 ### 3. Feature Engineering
 
-Additional features were created:
+Additional features were created to improve analysis and machine learning performance:
 
-* **profit** → whether a trade resulted in profit
-* **trade_value** → trade size in USD
-* **hour** → hour of trade execution
+* **profit** → Indicates whether a trade resulted in profit
+* **trade_value** → Total trade value in USD
+* **hour** → Hour of trade execution
 
-### 4. Dataset Merge
+These engineered features help capture trading behavior patterns.
 
-The trader dataset and sentiment dataset were merged using the **date column** to analyze trader behavior relative to market sentiment.
+---
+
+## Dataset Merge
+
+The trader dataset and sentiment dataset were merged using the **date column** so that each trade is associated with the corresponding market sentiment.
+
+```text
+Trader Data + Market Sentiment → Combined Dataset
+```
 
 ---
 
 ## Exploratory Data Analysis (EDA)
 
-The following analyses were conducted:
+Several analyses were conducted to understand trading patterns:
 
 * Average Profit by Market Sentiment
 * Trader Win Rate by Sentiment
 * Trade Size vs Market Sentiment
-* Buy vs Sell Profitability
+* Buy vs Sell Performance
 * Trading Activity by Hour
+
+These analyses reveal how trader behavior changes across different market conditions.
 
 ---
 
 ## Visualizations
 
-Several charts were created to understand trader behavior patterns:
+The project includes multiple visualizations to interpret trading behavior:
 
 * Profit Distribution by Market Sentiment
 * Trade Size Distribution by Sentiment
 * Trading Activity by Hour
 * Correlation Heatmap of Trading Metrics
 
-These visualizations help highlight how trader behavior shifts under different sentiment conditions.
+These charts help highlight patterns between sentiment and trading performance.
+
+---
+
+## Machine Learning Model
+
+A **Random Forest classifier** was trained to predict whether a trade will be profitable based on trading metrics and sentiment features.
+
+### Features Used
+
+* Execution Price
+* Trade Size (USD)
+* Trade Value
+* Market Sentiment Value
+* Hour of Trade
+
+### Target Variable
+
+```
+profit (True / False)
+```
+
+### Model Workflow
+
+1. Feature selection
+2. Train-test split
+3. Model training using Random Forest
+4. Prediction on test dataset
+5. Model evaluation
+
+---
+
+## Model Evaluation
+
+The model was evaluated using:
+
+* Accuracy Score
+* Confusion Matrix
+* Classification Report
+* Feature Importance Analysis
+
+Feature importance helps identify which trading factors most influence profitability.
 
 ---
 
 ## Key Insights
 
-**1. Highest Win Rate in Extreme Greed**
-Traders achieve the highest win rate during **Extreme Greed** sentiment, suggesting strong bullish momentum improves trading outcomes.
+**Insight 1 — Highest Win Rate During Extreme Greed**
 
-**2. Lower Profitability During Extreme Fear**
-Extreme Fear markets tend to produce lower profitability due to panic-driven trading behavior.
+Traders achieve the highest win rate during **Extreme Greed sentiment**, suggesting that strong bullish momentum improves trading outcomes.
 
-**3. Larger Trade Sizes During Greed**
-Trade sizes increase during **Greed and Extreme Greed** markets, indicating higher trader confidence and risk appetite.
+---
 
-**4. Concentrated Trading Activity**
-Trading activity peaks during certain hours, likely corresponding to periods of higher liquidity and market volatility.
+**Insight 2 — Lower Profitability During Extreme Fear**
+
+Extreme Fear markets show lower profitability due to panic-driven trading behavior and increased volatility.
+
+---
+
+**Insight 3 — Larger Trade Sizes During Greed Markets**
+
+Trade sizes tend to increase during **Greed and Extreme Greed sentiment**, indicating higher trader confidence and risk appetite.
+
+---
+
+**Insight 4 — Concentrated Trading Activity**
+
+Trading activity peaks during specific hours, likely corresponding to periods of higher market liquidity and volatility.
+
+---
+
+**Insight 5 — Market Sentiment Influences Trading Behavior**
+
+Market sentiment has a measurable impact on trading performance, risk-taking behavior, and trade execution patterns.
 
 ---
 
@@ -127,6 +195,7 @@ Trading activity peaks during certain hours, likely corresponding to periods of 
 * NumPy
 * Seaborn
 * Matplotlib
+* Scikit-learn
 * Google Colab
 
 ---
@@ -136,8 +205,10 @@ Trading activity peaks during certain hours, likely corresponding to periods of 
 ```
 trader-behavior-analysis-market-sentiment
 │
-├── Trader_Behavior_Analysis.ipynb
+├── Trader_Behavior_Analysis_Using_Market_Sentiment.ipynb
 ├── dataset/
+│   ├── Historical_Data.csv
+│   └── Fear_Greed_Index.csv
 └── README.md
 ```
 
@@ -145,12 +216,18 @@ trader-behavior-analysis-market-sentiment
 
 ## Conclusion
 
-This analysis demonstrates that market sentiment plays a significant role in trader behavior and performance.
-Understanding these behavioral patterns can help traders and analysts design more informed trading strategies.
+This project demonstrates how combining **market sentiment indicators with trading data** can reveal behavioral patterns in trading performance.
+
+By applying **machine learning models**, we can move beyond descriptive analysis and begin predicting trade outcomes, which could potentially support more informed trading strategies.
 
 ---
 
 ## Author
 
 **Vivekanand Kumar**
-B.Tech CSE | Data Science & Machine Learning Enthusiast
+
+B.Tech Computer Science Engineering
+Machine Learning & AI Enthusiast
+
+GitHub:
+https://github.com/vivekanandkumar001
